@@ -1,7 +1,4 @@
-package com.pg;
-
-import com.pg.patternElement.PatternElement;
-import com.pg.patternElement.PatternElementResult;
+package com.pg.patternElement;
 
 import java.util.List;
 

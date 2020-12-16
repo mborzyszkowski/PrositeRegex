@@ -4,14 +4,14 @@ import java.util.List;
 
 public class SpecificMovingSequencePatternElement implements PatternElement {
 
-    private final String specificAmino;
-    private final int firstNumber;
-    private final int secondNumber;
+    private final String specificAminoSign;
+    private final int minSequenceLength;
+    private final int maxSequenceLength;
 
-    public SpecificMovingSequencePatternElement(String specificAmino, int firstNumber, int secondNumber) {
-        this.specificAmino = specificAmino;
-        this.firstNumber = firstNumber;
-        this.secondNumber = secondNumber;
+    public SpecificMovingSequencePatternElement(String specificAminoSign, int minSequenceLength, int maxSequenceLength) {
+        this.specificAminoSign = specificAminoSign;
+        this.minSequenceLength = minSequenceLength;
+        this.maxSequenceLength = maxSequenceLength;
     }
 
     @Override

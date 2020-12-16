@@ -1,6 +1,7 @@
 package com.pg.patternElement;
 
 public class PatternElementResult {
+
     String parsedAminoSequence;
     PatternElement patternElement;
     int startPosition;
