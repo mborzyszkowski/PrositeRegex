@@ -14,7 +14,7 @@ public class SpecificStaticSequencePatternElement implements PatternElement {
     }
 
     @Override
-    public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
+    public PatternElementResult parse(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
         if (aminoSequence != null && !aminoSequence.isEmpty() && aminoSequence.length() >= this.sequenceLength) {
             String substring = aminoSequence.substring(0, this.sequenceLength);
 

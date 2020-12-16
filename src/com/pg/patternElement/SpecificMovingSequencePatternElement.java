@@ -15,7 +15,7 @@ public class SpecificMovingSequencePatternElement implements PatternElement {
     }
 
     @Override
-    public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
+    public PatternElementResult parse(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
         if (aminoSequence != null && !aminoSequence.isEmpty() && aminoSequence.length() >= this.minSequenceLength) {
             StringBuilder resultSequence = new StringBuilder();
             int counter = 0;

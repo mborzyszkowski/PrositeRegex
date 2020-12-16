@@ -18,7 +18,7 @@ class SpecificMovingSequencePatternElementTest {
         PatternElement patternElement = new SpecificMovingSequencePatternElement("A", 2, 3);
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertEquals(result.getStartPosition(), 1);
@@ -33,7 +33,7 @@ class SpecificMovingSequencePatternElementTest {
         PatternElement patternElement = new SpecificMovingSequencePatternElement("A", 2, 3);
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertEquals(result.getStartPosition(), 1);
@@ -48,7 +48,7 @@ class SpecificMovingSequencePatternElementTest {
         PatternElement patternElement = new SpecificMovingSequencePatternElement("A", 2, 3);
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertNull(result);
@@ -61,7 +61,7 @@ class SpecificMovingSequencePatternElementTest {
         PatternElement patternElement = new SpecificMovingSequencePatternElement("A", 2, 3);
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertNull(result);
