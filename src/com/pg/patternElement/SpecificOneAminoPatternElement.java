@@ -14,7 +14,8 @@ public class SpecificOneAminoPatternElement implements PatternElement {
 
     @Override
     public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
-        if (!aminoSequence.isEmpty() && PrositePattern.getAminoDictionary().contains(aminoSequence.subSequence(0, 1)) && specificAminoSign.equals(aminoSequence.substring(0, 1))) {
+        if (aminoSequence != null && !aminoSequence.isEmpty() && PrositePattern.getAminoDictionary().contains(aminoSequence.subSequence(0, 1))
+                && specificAminoSign.equals(aminoSequence.substring(0, 1))) {
             return new PatternElementResult(this.specificAminoSign, this, currentPosition);
         }
         return null;

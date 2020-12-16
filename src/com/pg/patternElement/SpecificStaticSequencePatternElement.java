@@ -1,6 +1,7 @@
 package com.pg.patternElement;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class SpecificStaticSequencePatternElement implements PatternElement {
 
@@ -14,6 +15,13 @@ public class SpecificStaticSequencePatternElement implements PatternElement {
 
     @Override
     public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
-        throw new UnsupportedOperationException();
+        if (aminoSequence != null && !aminoSequence.isEmpty() && aminoSequence.length() >= this.sequenceLength) {
+            String substring = aminoSequence.substring(0, this.sequenceLength);
+
+            if(Stream.of(substring.split("")).allMatch(c -> c.equals(specificAminoSign))) {
+                return new PatternElementResult(substring, this, currentPosition);
+            }
+        }
+        return null;
     }
 }
