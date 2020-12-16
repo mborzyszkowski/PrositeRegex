@@ -43,7 +43,12 @@ public class PrositePattern {
                         matchedPatterns.stream()
                                 .map(PatternElementResult::getParsedAminoSequence)
                                 .collect(Collectors.joining());
-                results.add(matchedAminoAcid);
+                int startIdx = 1 +
+                        matchedPatterns.stream()
+                                .findFirst()
+                                .map(PatternElementResult::getStartPosition)
+                                .orElse(0);
+                results.add("Position " + startIdx + ": \t" + matchedAminoAcid);
             }
         }
         return results;
