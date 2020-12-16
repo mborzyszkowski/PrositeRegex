@@ -2,6 +2,7 @@ package com.pg;
 
 import com.pg.patternElement.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,37 @@ public class PrositePattern {
         this.patternElements = patternElements;
     }
 
-    //TODO: instance - method parse amino acid
+    public List<String> match(String aminoAcidSequence) {
+        List<String> results = new ArrayList<>();
+
+        for (int i = 0; i < aminoAcidSequence.length(); i++) {
+            String currentAminoAcidSequence = aminoAcidSequence.substring(i);
+            List<PatternElementResult> matchedPatterns = new ArrayList<>();
+            int currentAminoAcidIdx = i;
+            boolean fullyMatched = true;
+
+            for (var patternElement : this.patternElements) {
+                PatternElementResult matchedResult = patternElement.parse(currentAminoAcidSequence, currentAminoAcidIdx, matchedPatterns);
+                if (matchedResult != null) {
+                    matchedPatterns.add(matchedResult);
+                    currentAminoAcidIdx += matchedResult.getParsedAminoSequence().length();
+                    currentAminoAcidSequence = currentAminoAcidSequence.substring(matchedResult.getParsedAminoSequence().length());
+                } else {
+                    fullyMatched = false;
+                    break;
+                }
+            }
+
+            if (fullyMatched) {
+                String matchedAminoAcid =
+                        matchedPatterns.stream()
+                                .map(PatternElementResult::getParsedAminoSequence)
+                                .collect(Collectors.joining());
+                results.add(matchedAminoAcid);
+            }
+        }
+        return results;
+    }
 
     public static PrositePattern CreatePattern(String stringPattern) throws Exception {
         List<PatternElement> patternElements = parsePatternElementList(stringPattern);

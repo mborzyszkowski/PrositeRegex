@@ -11,7 +11,7 @@ public class ErrorPatternElement implements PatternElement {
     }
 
     @Override
-    public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
+    public PatternElementResult parse(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
         return null;
     }
 

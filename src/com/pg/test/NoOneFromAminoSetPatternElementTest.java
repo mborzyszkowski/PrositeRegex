@@ -18,7 +18,7 @@ class NoOneFromAminoSetPatternElementTest {
         PatternElement patternElement = new NoOneFromAminoSetPatternElement("ADFJW");
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertEquals(result.getStartPosition(), 1);
@@ -33,7 +33,7 @@ class NoOneFromAminoSetPatternElementTest {
         PatternElement patternElement = new NoOneFromAminoSetPatternElement("ADFJW");
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertNull(result);
@@ -46,7 +46,7 @@ class NoOneFromAminoSetPatternElementTest {
         PatternElement patternElement = new NoOneFromAminoSetPatternElement("ADFJW");
 
         // Act
-        PatternElementResult result = patternElement.parsePattern(examplePatternString, 1, new ArrayList<>());
+        PatternElementResult result = patternElement.parse(examplePatternString, 1, new ArrayList<>());
 
         // Assert
         assertNull(result);
