@@ -22,7 +22,7 @@ class SpecificStaticSequencePatternElementTest {
 
         // Assert
         assertEquals(result.getStartPosition(), 1);
-        assertEquals(result.getParsedAminoSequence(), "A");
+        assertEquals(result.getParsedAminoSequence(), "AA");
         assertTrue(result.getPatternElement() instanceof SpecificStaticSequencePatternElement);
     }
 

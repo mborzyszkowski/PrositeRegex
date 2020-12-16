@@ -16,6 +16,23 @@ public class SpecificMovingSequencePatternElement implements PatternElement {
 
     @Override
     public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
-        throw new UnsupportedOperationException();
+        if (aminoSequence != null && !aminoSequence.isEmpty() && aminoSequence.length() >= this.minSequenceLength) {
+            StringBuilder resultSequence = new StringBuilder();
+            int counter = 0;
+
+            for (var character : aminoSequence.toCharArray()) {
+                if (this.specificAminoSign.equals(String.valueOf(character)) && this.maxSequenceLength > counter) {
+                    resultSequence.append(character);
+                    counter++;
+                } else {
+                    break;
+                }
+            }
+
+            if (this.maxSequenceLength >= resultSequence.length() && this.minSequenceLength <= resultSequence.length()) {
+                return new PatternElementResult(resultSequence.toString(), this, currentPosition);
+            }
+        }
+        return null;
     }
 }
