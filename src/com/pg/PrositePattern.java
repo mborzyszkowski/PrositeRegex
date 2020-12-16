@@ -124,6 +124,10 @@ public class PrositePattern {
                 return new ErrorPatternElement(stringPatternElement);
             }
 
+            if (firstNumber > secondNumber) {
+                return new ErrorPatternElement("First number of sequence " + stringPatternElement + " can not be grater then second number");
+            }
+
             if (stringPatternElement.charAt(stringPatternElement.length() - 1) == ')') {
                 return new SpecificMovingSequencePatternElement(stringPatternElement.substring(0, 1), firstNumber, secondNumber);
             }
