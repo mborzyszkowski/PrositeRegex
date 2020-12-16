@@ -4,12 +4,12 @@ import java.util.List;
 
 public class SpecificStaticSequencePatternElement implements PatternElement {
 
-    private final String specificAmino;
-    private final int times;
+    private final String specificAminoSign;
+    private final int sequenceLength;
 
-    public SpecificStaticSequencePatternElement(String specificAmino, int times) {
-        this.specificAmino = specificAmino;
-        this.times = times;
+    public SpecificStaticSequencePatternElement(String specificAminoSign, int times) {
+        this.specificAminoSign = specificAminoSign;
+        this.sequenceLength = times;
     }
 
     @Override

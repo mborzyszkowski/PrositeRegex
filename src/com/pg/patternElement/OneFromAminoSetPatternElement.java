@@ -1,0 +1,22 @@
+package com.pg.patternElement;
+
+import com.pg.PrositePattern;
+
+import java.util.List;
+
+public class OneFromAminoSetPatternElement implements PatternElement {
+
+    private final String dictionary;
+
+    public OneFromAminoSetPatternElement(String dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    @Override
+    public PatternElementResult parsePattern(String aminoSequence, int currentPosition, List<PatternElementResult> lastResults) {
+        if (!aminoSequence.isEmpty() && PrositePattern.getAminoDictionary().contains(aminoSequence.subSequence(0, 1)) && this.dictionary.contains(aminoSequence.subSequence(0, 1))) {
+            return new PatternElementResult(aminoSequence.substring(0, 1), this, currentPosition);
+        }
+        return null;
+    }
+}
