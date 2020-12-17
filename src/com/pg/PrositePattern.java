@@ -17,8 +17,22 @@ public class PrositePattern {
         this.patternElements = patternElements;
     }
 
-    public List<String> match(String aminoAcidSequence) {
-        List<String> results = new ArrayList<>();
+    public List<String> matchAsStrings(String aminoAcidSequence) {
+        List<List<PatternElementResult>> resultMatches = match(aminoAcidSequence);
+        List<String> result = new ArrayList<>();
+
+        for (var matchResult : resultMatches) {
+            String matchedAminoAcid =
+                    matchResult.stream()
+                            .map(PatternElementResult::getParsedAminoSequence)
+                            .collect(Collectors.joining());
+            result.add(matchedAminoAcid);
+        }
+        return result;
+    }
+
+    public List<List<PatternElementResult>> match(String aminoAcidSequence) {
+        List<List<PatternElementResult>> results = new ArrayList<>();
 
         for (int i = 0; i < aminoAcidSequence.length(); i++) {
             String currentAminoAcidSequence = aminoAcidSequence.substring(i);
@@ -43,16 +57,7 @@ public class PrositePattern {
             }
 
             if (fullyMatched) {
-                String matchedAminoAcid =
-                        matchedPatterns.stream()
-                                .map(PatternElementResult::getParsedAminoSequence)
-                                .collect(Collectors.joining());
-                int startIdx = 1 +
-                        matchedPatterns.stream()
-                                .findFirst()
-                                .map(PatternElementResult::getStartPosition)
-                                .orElse(0);
-                results.add("Position " + startIdx + ": \t" + matchedAminoAcid);
+                results.add(matchedPatterns);
             }
         }
         return results;
