@@ -35,4 +35,18 @@ public class SpecificMovingSequencePatternElement implements PatternElement {
         }
         return null;
     }
+
+    // GETTERS AND SETTERS
+
+    public String getSpecificAminoSign() {
+        return specificAminoSign;
+    }
+
+    public int getMinSequenceLength() {
+        return minSequenceLength;
+    }
+
+    public int getMaxSequenceLength() {
+        return maxSequenceLength;
+    }
 }
