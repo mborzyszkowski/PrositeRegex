@@ -1,6 +1,10 @@
 package com.pg;
 
+import com.pg.patternElement.PatternElementResult;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -18,7 +22,20 @@ public class Main {
             return;
         }
 
-        List<String> matchedResults = pattern.match(aminoAcidSequence);
-        matchedResults.forEach(System.out::println);
+        List<List<PatternElementResult>> matchedResults = pattern.match(aminoAcidSequence);
+        List<String> results = new ArrayList<>();
+        for (var matchResult : matchedResults) {
+            String matchedAminoAcid =
+                    matchResult.stream()
+                            .map(PatternElementResult::getParsedAminoSequence)
+                            .collect(Collectors.joining());
+            int startIdx = 1 +
+                    matchResult.stream()
+                            .findFirst()
+                            .map(PatternElementResult::getStartPosition)
+                            .orElse(0);
+            results.add("Position " + startIdx + ": \t" + matchedAminoAcid);
+        }
+        results.forEach(System.out::println);
     }
 }
