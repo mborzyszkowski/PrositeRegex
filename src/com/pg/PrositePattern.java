@@ -30,8 +30,12 @@ public class PrositePattern {
                 PatternElementResult matchedResult = patternElement.parse(currentAminoAcidSequence, currentAminoAcidIdx, matchedPatterns);
                 if (matchedResult != null) {
                     matchedPatterns.add(matchedResult);
-                    currentAminoAcidIdx += matchedResult.getParsedAminoSequence().length();
-                    currentAminoAcidSequence = currentAminoAcidSequence.substring(matchedResult.getParsedAminoSequence().length());
+                    currentAminoAcidIdx = i +
+                            matchedPatterns.stream()
+                                    .map(r -> r.getParsedAminoSequence().length())
+                                    .reduce(Integer::sum)
+                                    .orElse(0);
+                    currentAminoAcidSequence = aminoAcidSequence.substring(currentAminoAcidIdx);
                 } else {
                     fullyMatched = false;
                     break;
