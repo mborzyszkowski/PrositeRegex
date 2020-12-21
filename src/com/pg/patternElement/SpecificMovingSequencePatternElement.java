@@ -37,7 +37,7 @@ public class SpecificMovingSequencePatternElement implements PatternElement {
                 if (lastMatchedAminoString.length() >= ((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getMinSequenceLength() + requiredEndLength
                         && ((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getSpecificAminoSign().equals(this.specificAminoSign)) {
                     int maxBorrow = Math.min(this.maxSequenceLength - resultSequence.length(),
-                            lastMatched.getParsedAminoSequence().length() - ((SpecificMovingSequencePatternElement)lastMatched.getPatternElement()).getMinSequenceLength());
+                            lastMatched.getParsedAminoSequence().length() - ((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getMinSequenceLength());
                     lastMatched.setParsedAminoSequence(lastMatchedAminoString.substring(0, lastMatchedAminoString.length() - maxBorrow));
                     return new PatternElementResult(resultSequence.toString() + lastMatchedAminoString.substring(lastMatchedAminoString.length() - maxBorrow),
                             this, currentPosition - maxBorrow);
@@ -61,22 +61,29 @@ public class SpecificMovingSequencePatternElement implements PatternElement {
                 }
             }
 
-            if (lastResults.size() > 0 && lastResults.get(lastResults.size() - 1).getPatternElement() instanceof SpecificMovingSequencePatternElement) {
-                PatternElementResult lastMatched = lastResults.get(lastResults.size() - 1);
-                String lastMatchedAminoString = lastMatched.getParsedAminoSequence();
+            if (lastResults.size() > 0) {
+                PatternElementResult lastMatchedPattern = lastResults.get(lastResults.size() - 1);
+                String symbolToBorrow = lastMatchedPattern.getParsedAminoSequence().substring(0, 1);
                 int requiredEndLength = this.minSequenceLength - resultAminoSequence.length();
 
-                if (lastMatchedAminoString.length() >= ((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getMinSequenceLength() + requiredEndLength
-                        && ((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getSpecificAminoSign().equals(this.specificAminoSign)) {
-                    int maxBorrow = Math.min(this.maxSequenceLength - resultAminoSequence.length(),
-                            lastMatched.getParsedAminoSequence().length() - ((SpecificMovingSequencePatternElement)lastMatched.getPatternElement()).getMinSequenceLength());
-                    lastMatched.setParsedAminoSequence(lastMatchedAminoString.substring(0, lastMatchedAminoString.length() - maxBorrow));
-                    return new PatternElementResult(resultAminoSequence.toString() + lastMatchedAminoString.substring(lastMatchedAminoString.length() - maxBorrow),
-                            this, currentPosition - maxBorrow);
+                if (this.specificAminoSign.equals(symbolToBorrow)) {
+                    BorrowPossibilities borrowPossibilities = BorrowPossibilities.CheckBorrowPossibility(lastResults, symbolToBorrow);
+
+                    if (borrowPossibilities.getBorrowPossibilitiesLength() >= requiredEndLength) {
+                        int maxBorrow = Math.min(this.maxSequenceLength - resultAminoSequence.length(), borrowPossibilities.getBorrowPossibilitiesLength());
+                        if (borrowPossibilities.borrow(maxBorrow)) {
+                            return new PatternElementResult(resultAminoSequence.toString() + generateStringN(symbolToBorrow, maxBorrow),
+                                    this, currentPosition - maxBorrow);
+                        }
+                    }
                 }
             }
         }
         return null;
+    }
+
+    public static String generateStringN(String symbol, int n) {
+        return String.valueOf(symbol).repeat(Math.max(0, n));
     }
 
     // GETTERS AND SETTERS

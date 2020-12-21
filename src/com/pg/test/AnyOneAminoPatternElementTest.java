@@ -1,12 +1,10 @@
 package com.pg.test;
 
-import com.pg.patternElement.AnyOneAminoPatternElement;
-import com.pg.patternElement.PatternElement;
-import com.pg.patternElement.PatternElementResult;
-import com.pg.patternElement.SpecificMovingSequencePatternElement;
+import com.pg.patternElement.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,19 +43,20 @@ class AnyOneAminoPatternElementTest {
     void ParseAminoSequenceWithBorrowing() {
         //Arrange
         String examplePatternString = "AAA";
-        List<PatternElementResult> resultList = new ArrayList<>();
-        PatternElement patternElement = new SpecificMovingSequencePatternElement("A", 2, 3);
-        PatternElementResult result = patternElement.parse(examplePatternString, 1, resultList);
-        resultList.add(result);
-        examplePatternString = examplePatternString.substring(result.getParsedAminoSequence().length());
+        PatternElement firstParsed = new SpecificMovingSequencePatternElement("A", 1, 3);
+        PatternElement secondParsed = new AnyOneAminoPatternElement();
+        List<PatternElementResult> resultList =
+                Arrays.asList(
+                        new PatternElementResult("AA", firstParsed, 0),
+                        new PatternElementResult("A", secondParsed, 2));
 
-        patternElement = new AnyOneAminoPatternElement();
+        PatternElement patternElement = new AnyOneAminoPatternElement();
 
         // Act
-        result = patternElement.parse(examplePatternString, result.getParsedAminoSequence().length() + 1, resultList);
+        PatternElementResult result = patternElement.parse("", 3, resultList);
 
         // Assert
-        assertEquals(result.getStartPosition(), 3);
+        assertEquals(result.getStartPosition(), 2);
         assertEquals(result.getParsedAminoSequence(), "A");
         assertTrue(result.getPatternElement() instanceof AnyOneAminoPatternElement);
     }

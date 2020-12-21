@@ -4,6 +4,7 @@ import com.pg.patternElement.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,19 +56,20 @@ class NoOneFromAminoSetPatternElementTest {
     void ParseAminoSequenceWithBorrowing() {
         //Arrange
         String examplePatternString = "CCC";
-        List<PatternElementResult> resultList = new ArrayList<>();
-        PatternElement patternElement = new SpecificMovingSequencePatternElement("C", 2, 3);
-        PatternElementResult result = patternElement.parse(examplePatternString, 1, resultList);
-        resultList.add(result);
-        examplePatternString = examplePatternString.substring(result.getParsedAminoSequence().length());
+        PatternElement firstParsed = new SpecificMovingSequencePatternElement("C", 1, 3);
+        PatternElement secondParsed = new NoOneFromAminoSetPatternElement("ADFJW");
+        List<PatternElementResult> resultList =
+                Arrays.asList(
+                        new PatternElementResult("CC", firstParsed, 0),
+                        new PatternElementResult("C", secondParsed, 2));
 
-        patternElement = new NoOneFromAminoSetPatternElement("ADFJW");
+        PatternElement patternElement = new NoOneFromAminoSetPatternElement("ADFJW");
 
         // Act
-        result = patternElement.parse(examplePatternString, result.getParsedAminoSequence().length() + 1, resultList);
+        PatternElementResult result = patternElement.parse("", 3, resultList);
 
         // Assert
-        assertEquals(result.getStartPosition(), 3);
+        assertEquals(result.getStartPosition(), 2);
         assertEquals(result.getParsedAminoSequence(), "C");
         assertTrue(result.getPatternElement() instanceof NoOneFromAminoSetPatternElement);
     }

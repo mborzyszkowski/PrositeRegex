@@ -12,8 +12,12 @@ public class Main {
         PrositePattern pattern;
 //        String patternString = "[RK]-G-{EDRKHPCG}-[AGSCI]-[FY]-[LIVA]-x-[FYM]";                         // base example
 //        String aminoAcidSequence = "SRSLKMRGQAFVIFKEVSSATKLTGRPRGVAFVRYNKREEAQVGCSVHKGFAFVQYVNERNAR";
-        String patternString = "[RK]-G(1,3)-G(2)-{EDRKHPCG}-[AGSCI]-[FY]-[LIVA]-x-[FYM]";               // full example
-        String aminoAcidSequence = "SRSLKMRGGGQAFVIFKEVSSATKLTGRPRGGGVAFVRYNKREEAQVGCSVHKGGGFAFVQYVNERNAR";
+//        String patternString = "[RK]-G(1,3)-G(2)-{EDRKHPCG}-[AGSCI]-[FY]-[LIVA]-x-[FYM]";               // full example
+//        String aminoAcidSequence = "SRSLKMRGGGQAFVIFKEVSSATKLTGRPRGGGVAFVRYNKREEAQVGCSVHKGGGFAFVQYVNERNAR";
+//        String patternString = "[RK-G1,3)-G(2)-{EDRKHPCG}-AGSCI]-[FY]-[LIVA]--[FYM]";               // full example
+//        String aminoAcidSequence = "SRSLKMRGGGQAFVIFKEVSSATKLTGRPRGGGVAFVRYNKREEAQVGCSVHKGGGFAFVQYVNERNAR";
+        String patternString = "[A]-G(1,2)-G-G(1,2)-[AG]-G(1,2)-{A}-G(1,2)-G(2)-A";               // super example
+        String aminoAcidSequence = "AAAGGGGGGGGGAGGGGGGGGGAAD";
 
         try {
             pattern = PrositePattern.CreatePattern(patternString);
