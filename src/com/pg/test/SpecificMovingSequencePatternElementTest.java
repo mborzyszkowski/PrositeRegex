@@ -3,9 +3,11 @@ package com.pg.test;
 import com.pg.patternElement.PatternElement;
 import com.pg.patternElement.PatternElementResult;
 import com.pg.patternElement.SpecificMovingSequencePatternElement;
+import com.pg.patternElement.SpecificStaticSequencePatternElement;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,21 +73,22 @@ class SpecificMovingSequencePatternElementTest {
     @Test
     void ParseAminoSequenceWithBorrowing() {
         //Arrange
-        String examplePatternString = "CCCCC";
-        List<PatternElementResult> resultList = new ArrayList<>();
-        PatternElement patternElement = new SpecificMovingSequencePatternElement("C", 2, 3);
-        PatternElementResult result = patternElement.parse(examplePatternString, 1, resultList);
-        resultList.add(result);
-        examplePatternString = examplePatternString.substring(result.getParsedAminoSequence().length());
+        String examplePatternString = "CCCC";
+        PatternElement firstParsed = new SpecificMovingSequencePatternElement("C", 1, 3);
+        PatternElement secondParsed = new SpecificMovingSequencePatternElement("C", 1, 3);
+        List<PatternElementResult> resultList =
+                Arrays.asList(
+                        new PatternElementResult("C", firstParsed, 0),
+                        new PatternElementResult("CCC", secondParsed, 3));
 
-        patternElement = new SpecificMovingSequencePatternElement("C", 2, 3);
+        PatternElement patternElement = new SpecificMovingSequencePatternElement("C", 2, 3);
 
         // Act
-        result = patternElement.parse(examplePatternString, result.getParsedAminoSequence().length() + 1, resultList);
+        PatternElementResult result = patternElement.parse("", 4, resultList);
 
         // Assert
-        assertEquals(result.getStartPosition(), 3);
-        assertEquals(result.getParsedAminoSequence(), "CCC");
+        assertEquals(result.getStartPosition(), 2);
+        assertEquals(result.getParsedAminoSequence(), "CC");
         assertTrue(result.getPatternElement() instanceof SpecificMovingSequencePatternElement);
     }
 }

@@ -20,14 +20,18 @@ public class NoOneFromAminoSetPatternElement implements PatternElement {
         }
 
         // borrow one amino from SpecificMovingSequencePatternElement if possible
-        if (lastResults.size() > 0 && lastResults.get(lastResults.size() - 1).getPatternElement() instanceof SpecificMovingSequencePatternElement) {
-            PatternElementResult lastMatched = lastResults.get(lastResults.size() - 1);
-            String lastMatchedAminoString = lastMatched.getParsedAminoSequence();
+        if (lastResults.size() > 0) {
+            PatternElementResult lastMatchedPattern = lastResults.get(lastResults.size() - 1);
+            String symbolToBorrow = lastMatchedPattern.getParsedAminoSequence().substring(0, 1);
 
-            if (lastMatchedAminoString.length() > ((SpecificMovingSequencePatternElement)lastMatched.getPatternElement()).getMinSequenceLength()
-                    && !this.dictionary.contains(((SpecificMovingSequencePatternElement) lastMatched.getPatternElement()).getSpecificAminoSign())) {
-                lastMatched.setParsedAminoSequence(lastMatchedAminoString.substring(0, lastMatchedAminoString.length() - 1));
-                return new PatternElementResult(lastMatchedAminoString.substring(lastMatchedAminoString.length() - 1), this, currentPosition - 1);
+            if (!this.dictionary.contains(symbolToBorrow)) {
+                BorrowPossibilities borrowPossibilities = BorrowPossibilities.CheckBorrowPossibility(lastResults, symbolToBorrow);
+
+                if (borrowPossibilities.getBorrowPossibilitiesLength() >= 1) {
+                    if (borrowPossibilities.borrow(1)) {
+                        return new PatternElementResult(symbolToBorrow, this, currentPosition - 1);
+                    }
+                }
             }
         }
         return null;

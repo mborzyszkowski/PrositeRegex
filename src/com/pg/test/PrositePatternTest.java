@@ -5,6 +5,7 @@ import com.pg.patternElement.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -145,5 +146,33 @@ class PrositePatternTest {
 
         // Assert
         assertArrayEquals(results.toArray(), Arrays.asList("KACP", "PACL").toArray());
+    }
+
+    @Test
+    void PatternMatchTest3() throws Exception {
+        //Arrange
+        String patternString = "{A}-[CD]-D(2)-[AD]-x";
+        String aminoAcidSequence = "AAACDDDACDDADDDD";
+        PrositePattern pattern = PrositePattern.CreatePattern(patternString);
+
+        // Act
+        List<String> results = pattern.matchAsStrings(aminoAcidSequence);
+
+        // Assert
+        assertArrayEquals(results.toArray(), Collections.singletonList("CDDDAC").toArray());
+    }
+
+    @Test
+    void PatternMatchTest4() throws Exception {
+        //Arrange
+        String patternString = "[A]-G(1,2)-G-G(1,2)-[AG]-G(1,2)-{A}-G(1,2)-G(2)-F";
+        String aminoAcidSequence = "AAAGGGGGGGGGFAD";
+        PrositePattern pattern = PrositePattern.CreatePattern(patternString);
+
+        // Act
+        List<String> results = pattern.matchAsStrings(aminoAcidSequence);
+
+        // Assert
+        assertArrayEquals(results.toArray(), Collections.singletonList("AGGGGGGGGGF").toArray());
     }
 }

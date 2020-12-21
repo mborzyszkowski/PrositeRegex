@@ -4,6 +4,7 @@ import com.pg.patternElement.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,17 +55,18 @@ class SpecificStaticSequencePatternElementTest {
     @Test
     void ParseAminoSequenceWithBorrowing() {
         //Arrange
-        String examplePatternString = "CCCC";
-        List<PatternElementResult> resultList = new ArrayList<>();
-        PatternElement patternElement = new SpecificMovingSequencePatternElement("C", 2, 3);
-        PatternElementResult result = patternElement.parse(examplePatternString, 1, resultList);
-        resultList.add(result);
-        examplePatternString = examplePatternString.substring(result.getParsedAminoSequence().length());
+        String examplePatternString = "CCCCC";
+        PatternElement firstParsed = new SpecificMovingSequencePatternElement("C", 1, 3);
+        PatternElement secondParsed = new SpecificStaticSequencePatternElement("C", 2);
+        List<PatternElementResult> resultList =
+                Arrays.asList(
+                        new PatternElementResult("CCC", firstParsed, 0),
+                        new PatternElementResult("CC", secondParsed, 3));
 
-        patternElement = new SpecificStaticSequencePatternElement("C", 2);
+        PatternElement patternElement = new SpecificStaticSequencePatternElement("C", 2);
 
         // Act
-        result = patternElement.parse(examplePatternString, result.getParsedAminoSequence().length() + 1, resultList);
+        PatternElementResult result = patternElement.parse("", 5, resultList);
 
         // Assert
         assertEquals(result.getStartPosition(), 3);

@@ -4,7 +4,7 @@ public class PatternElementResult {
 
     private String parsedAminoSequence;
     private PatternElement patternElement;
-    private  int startPosition;
+    private int startPosition;
 
     public PatternElementResult(String parsedAminoSequence, PatternElement patternElement, int startPosition) {
         this.parsedAminoSequence = parsedAminoSequence;
