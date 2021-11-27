@@ -1,2 +1,2 @@
 # PrositeRegex
-Detection of the motive set as a regular expression PROSITE in the sequence. Type A. Check if the theme is present in the given sequence, and if so, on which positions. You cannot use any ready-made functions operating on the regular expressions - you implement the algorithm yourself. Note: in the PROSITE format, we forbid nested parentheses. 
+It is a simple app that allows you to search for protein sequences based on a regex pattern.
